@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`externalConfig Test get none exist file should have empty object 1`] = `Object {}`;
+
+exports[`externalConfig Test getExternalConfig without filename should return falsy 1`] = `Object {}`;

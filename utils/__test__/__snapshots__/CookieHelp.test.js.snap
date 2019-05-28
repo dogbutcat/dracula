@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CookieHelp TestSuit Can normally storage object to cookie 1`] = `
+Array [
+  "ddee",
+  "ffaa",
+]
+`;
+
+exports[`CookieHelp TestSuit Can normally storage object to cookie 2`] = `"wow"`;
+
+exports[`CookieHelp TestSuit saveUserInfo can save User cookie and get user info not first time works 1`] = `
+Object {
+  "likes": Array [
+    "o",
+    "c",
+    "u",
+  ],
+  "location": Object {
+    "code": 1,
+    "geo": Array [
+      112,
+      35,
+    ],
+    "short": "BJ",
+  },
+  "name": "a",
+  "pwd": "b",
+}
+`;

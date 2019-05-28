@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_gMa8cKG1Eee_8r4lMcK4cA" name="server">
+  <packagedElement xmi:type="uml:Class" xmi:id="_vd1RAKG1Eee_8r4lMcK4cA" name="app" visibility="public">
+    <ownedOperation xmi:id="_SUFuIKHKEee_8r4lMcK4cA" name="createApp" isStatic="true">
+      <ownedParameter xmi:id="_aQ4lkKHKEee_8r4lMcK4cA" name="needHotUpdate" isUnique="false">
+        <ownedComment xmi:id="_g1OcUKHKEee_8r4lMcK4cA" annotatedElement="_aQ4lkKHKEee_8r4lMcK4cA">
+          <body>true to enable hot upload, false to disable</body>
+        </ownedComment>
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_arHqgKHKEee_8r4lMcK4cA" value="1"/>
+      </ownedParameter>
+      <ownedParameter xmi:id="_owmQ0KJhEee_8r4lMcK4cA" name="setting" isUnique="false">
+        <type xmi:type="uml:Class" href="config.uml#_SOZ_4KGpEee_8r4lMcK4cA"/>
+      </ownedParameter>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_FDWn8KG2Eee_8r4lMcK4cA" name="controllers" visibility="private">
+    <packagedElement xmi:type="uml:Class" xmi:id="_J9_V8KG2Eee_8r4lMcK4cA" name="BaseController" visibility="private">
+      <ownedAttribute xmi:id="_6-Os4KHHEee_8r4lMcK4cA" name="Host" visibility="private">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_6-Os4aHHEee_8r4lMcK4cA"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_6-Os4qHHEee_8r4lMcK4cA" value="1"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="_-pwjcKHHEee_8r4lMcK4cA" name="setHost"/>
+      <ownedOperation xmi:id="_A2TTgKHIEee_8r4lMcK4cA" name="getHost"/>
+      <ownedOperation xmi:id="_CVDJcKHIEee_8r4lMcK4cA" name="StructHeader">
+        <ownedParameter xmi:id="_FVJdYKHIEee_8r4lMcK4cA" name="req" isUnique="false"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_hXanUKJiEee_8r4lMcK4cA" name="constructor" visibility="private">
+        <ownedParameter xmi:id="_jsEKgKJiEee_8r4lMcK4cA" name="setting"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_59kMAKHFEee_8r4lMcK4cA" name="ApiController" visibility="protected">
+      <generalization xmi:id="_cxBj4KHGEee_8r4lMcK4cA" general="_J9_V8KG2Eee_8r4lMcK4cA"/>
+      <ownedOperation xmi:id="_MXNK4KHIEee_8r4lMcK4cA" name="mainEntry"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_YSx28KHGEee_8r4lMcK4cA" name="IndexController" visibility="protected">
+      <generalization xmi:id="_dQHToKHGEee_8r4lMcK4cA" general="_J9_V8KG2Eee_8r4lMcK4cA"/>
+      <ownedOperation xmi:id="_lsKoAKHIEee_8r4lMcK4cA" name="mainEntry"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_xLb9IKHHEee_8r4lMcK4cA" name="import" memberEnd="_xLb9IaHHEee_8r4lMcK4cA _xLb9JKHHEee_8r4lMcK4cA" navigableOwnedEnd="_xLb9JKHHEee_8r4lMcK4cA">
+      <ownedEnd xmi:id="_xLb9IaHHEee_8r4lMcK4cA" name="baseControllers" type="_J9_V8KG2Eee_8r4lMcK4cA" association="_xLb9IKHHEee_8r4lMcK4cA">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_xLb9IqHHEee_8r4lMcK4cA"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_xLb9I6HHEee_8r4lMcK4cA" value="*"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_xLb9JKHHEee_8r4lMcK4cA" name="settings" association="_xLb9IKHHEee_8r4lMcK4cA">
+        <type xmi:type="uml:Class" href="config.uml#_SOZ_4KGpEee_8r4lMcK4cA"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_xLb9JaHHEee_8r4lMcK4cA"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_xLb9JqHHEee_8r4lMcK4cA" value="*"/>
+      </ownedEnd>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_pasaIKHGEee_8r4lMcK4cA" name="routes" visibility="private">
+    <packagedElement xmi:type="uml:Class" xmi:id="_yYMgoKHGEee_8r4lMcK4cA" name="BaseRoute" visibility="private">
+      <ownedAttribute xmi:id="_5bHncKHfEee_8r4lMcK4cA" name="_router" visibility="public">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5bHncaHfEee_8r4lMcK4cA"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5bHncqHfEee_8r4lMcK4cA" value="1"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="_PtEPQKHPEee_8r4lMcK4cA" name="getRoute"/>
+      <ownedOperation xmi:id="_tK6DgKJiEee_8r4lMcK4cA" name="constructor" visibility="private">
+        <ownedParameter xmi:id="_vS6R0KJiEee_8r4lMcK4cA" name="setting"/>
+        <ownedParameter xmi:id="_y1MFwKJiEee_8r4lMcK4cA" name="controller" type="_J9_V8KG2Eee_8r4lMcK4cA"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_CAu7wKHHEee_8r4lMcK4cA" name="ApiRoute" visibility="protected">
+      <generalization xmi:id="_H_we8KHHEee_8r4lMcK4cA" general="_yYMgoKHGEee_8r4lMcK4cA"/>
+      <ownedOperation xmi:id="_GYwMAKJjEee_8r4lMcK4cA" name="constructor" visibility="private">
+        <ownedParameter xmi:id="_I32rsKJjEee_8r4lMcK4cA" name="setting"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_FOR10KHHEee_8r4lMcK4cA" name="IndexRoute" visibility="protected">
+      <generalization xmi:id="_IbmtcKHHEee_8r4lMcK4cA" general="_yYMgoKHGEee_8r4lMcK4cA"/>
+      <ownedOperation xmi:id="_LaEJwKJjEee_8r4lMcK4cA" name="constructor" visibility="private">
+        <ownedParameter xmi:id="_NM-R0KJjEee_8r4lMcK4cA" name="setting"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_qP3csKHIEee_8r4lMcK4cA" name="import" memberEnd="_qP3csaHIEee_8r4lMcK4cA _qP3ctKHIEee_8r4lMcK4cA" navigableOwnedEnd="_qP3ctKHIEee_8r4lMcK4cA">
+      <ownedEnd xmi:id="_qP3csaHIEee_8r4lMcK4cA" name="apiRoutes" type="_CAu7wKHHEee_8r4lMcK4cA" association="_qP3csKHIEee_8r4lMcK4cA">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_qP3csqHIEee_8r4lMcK4cA"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_qP3cs6HIEee_8r4lMcK4cA" value="*"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_qP3ctKHIEee_8r4lMcK4cA" name="apiControllers" type="_59kMAKHFEee_8r4lMcK4cA" association="_qP3csKHIEee_8r4lMcK4cA">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_qP3ctaHIEee_8r4lMcK4cA"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_qP3ctqHIEee_8r4lMcK4cA" value="*"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_y4TSIKHIEee_8r4lMcK4cA" name="import" memberEnd="_y4TSIaHIEee_8r4lMcK4cA _y4TSJKHIEee_8r4lMcK4cA" navigableOwnedEnd="_y4TSJKHIEee_8r4lMcK4cA">
+      <ownedEnd xmi:id="_y4TSIaHIEee_8r4lMcK4cA" name="indexRoutes" type="_FOR10KHHEee_8r4lMcK4cA" association="_y4TSIKHIEee_8r4lMcK4cA">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_y4TSIqHIEee_8r4lMcK4cA"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_y4TSI6HIEee_8r4lMcK4cA" value="*"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_y4TSJKHIEee_8r4lMcK4cA" name="indexControllers" type="_YSx28KHGEee_8r4lMcK4cA" association="_y4TSIKHIEee_8r4lMcK4cA">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_y4TSJaHIEee_8r4lMcK4cA"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_y4TSJqHIEee_8r4lMcK4cA" value="*"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_L1_ewKHJEee_8r4lMcK4cA" name="index" visibility="public">
+      <ownedOperation xmi:id="_L7NkcKJiEee_8r4lMcK4cA" name="createRoute">
+        <ownedParameter xmi:id="_N1sUIKJiEee_8r4lMcK4cA" name="setting">
+          <type xmi:type="uml:Class" href="config.uml#_SOZ_4KGpEee_8r4lMcK4cA"/>
+        </ownedParameter>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_Xl7QoKHJEee_8r4lMcK4cA" name="import" memberEnd="_Xl7QoaHJEee_8r4lMcK4cA _Xl7QpKHJEee_8r4lMcK4cA" navigableOwnedEnd="_Xl7QpKHJEee_8r4lMcK4cA">
+      <ownedEnd xmi:id="_Xl7QoaHJEee_8r4lMcK4cA" name="indexs" type="_L1_ewKHJEee_8r4lMcK4cA" association="_Xl7QoKHJEee_8r4lMcK4cA">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Xl7QoqHJEee_8r4lMcK4cA"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Xl7Qo6HJEee_8r4lMcK4cA" value="*"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_Xl7QpKHJEee_8r4lMcK4cA" name="apiRoutes" type="_CAu7wKHHEee_8r4lMcK4cA" association="_Xl7QoKHJEee_8r4lMcK4cA">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Xl7QpaHJEee_8r4lMcK4cA"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Xl7QpqHJEee_8r4lMcK4cA" value="*"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_b__BIKHJEee_8r4lMcK4cA" name="import" memberEnd="_b__BIaHJEee_8r4lMcK4cA _b__BJKHJEee_8r4lMcK4cA" navigableOwnedEnd="_b__BJKHJEee_8r4lMcK4cA">
+      <ownedEnd xmi:id="_b__BIaHJEee_8r4lMcK4cA" name="indexs" type="_L1_ewKHJEee_8r4lMcK4cA" association="_b__BIKHJEee_8r4lMcK4cA">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_b__BIqHJEee_8r4lMcK4cA"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_b__BI6HJEee_8r4lMcK4cA" value="*"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_b__BJKHJEee_8r4lMcK4cA" name="indexRoutes" type="_FOR10KHHEee_8r4lMcK4cA" association="_b__BIKHJEee_8r4lMcK4cA">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_b__BJaHJEee_8r4lMcK4cA"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_b__BJqHJEee_8r4lMcK4cA" value="*"/>
+      </ownedEnd>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_uq4aAKHJEee_8r4lMcK4cA" name="import" memberEnd="_uq4aAaHJEee_8r4lMcK4cA _uq5BEqHJEee_8r4lMcK4cA" navigableOwnedEnd="_uq5BEqHJEee_8r4lMcK4cA">
+    <ownedEnd xmi:id="_uq4aAaHJEee_8r4lMcK4cA" name="apps" type="_vd1RAKG1Eee_8r4lMcK4cA" association="_uq4aAKHJEee_8r4lMcK4cA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_uq5BEKHJEee_8r4lMcK4cA"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_uq5BEaHJEee_8r4lMcK4cA" value="*"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_uq5BEqHJEee_8r4lMcK4cA" name="indexs" type="_L1_ewKHJEee_8r4lMcK4cA" association="_uq4aAKHJEee_8r4lMcK4cA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_uq5BE6HJEee_8r4lMcK4cA"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_uq5BFKHJEee_8r4lMcK4cA" value="*"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_XzC0sKHLEee_8r4lMcK4cA" name="process">
+    <packagedElement xmi:type="uml:Class" xmi:id="_aNTQoKHLEee_8r4lMcK4cA" name="env" visibility="public">
+      <ownedAttribute xmi:id="_dRah4KHLEee_8r4lMcK4cA" name="PORT" visibility="public" isStatic="true">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_dRah4aHLEee_8r4lMcK4cA"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_dRah4qHLEee_8r4lMcK4cA" value="1"/>
+      </ownedAttribute>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_hjBhAKHLEee_8r4lMcK4cA" name="use" memberEnd="_hjBhAaHLEee_8r4lMcK4cA _hjKq8qHLEee_8r4lMcK4cA" navigableOwnedEnd="_hjKq8qHLEee_8r4lMcK4cA">
+    <ownedEnd xmi:id="_hjBhAaHLEee_8r4lMcK4cA" name="apps" type="_vd1RAKG1Eee_8r4lMcK4cA" association="_hjBhAKHLEee_8r4lMcK4cA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_hjKq8KHLEee_8r4lMcK4cA"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_hjKq8aHLEee_8r4lMcK4cA" value="*"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_hjKq8qHLEee_8r4lMcK4cA" name="envs" type="_aNTQoKHLEee_8r4lMcK4cA" association="_hjBhAKHLEee_8r4lMcK4cA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_hjKq86HLEee_8r4lMcK4cA"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_hjKq9KHLEee_8r4lMcK4cA" value="*"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_FK3RQKHOEee_8r4lMcK4cA" name="use" memberEnd="_FK3RQaHOEee_8r4lMcK4cA _FK3RRKHOEee_8r4lMcK4cA" navigableOwnedEnd="_FK3RRKHOEee_8r4lMcK4cA">
+    <ownedEnd xmi:id="_FK3RQaHOEee_8r4lMcK4cA" name="apps" type="_vd1RAKG1Eee_8r4lMcK4cA" association="_FK3RQKHOEee_8r4lMcK4cA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_FK3RQqHOEee_8r4lMcK4cA"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_FK3RQ6HOEee_8r4lMcK4cA" value="*"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_FK3RRKHOEee_8r4lMcK4cA" name="settings" association="_FK3RQKHOEee_8r4lMcK4cA">
+      <type xmi:type="uml:Class" href="config.uml#_SOZ_4KGpEee_8r4lMcK4cA"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_FK3RRaHOEee_8r4lMcK4cA"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_FK3RRqHOEee_8r4lMcK4cA" value="*"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_0V4UUKHREee_8r4lMcK4cA" name="middlewares">
+    <packagedElement xmi:type="uml:Class" xmi:id="_8PQEUKHREee_8r4lMcK4cA" name="MiddlewareBase" visibility="protected">
+      <ownedOperation xmi:id="_o7wTAKHUEee_8r4lMcK4cA" name="configure" isStatic="true">
+        <ownedComment xmi:id="_vcFzgKHUEee_8r4lMcK4cA" annotatedElement="_o7wTAKHUEee_8r4lMcK4cA">
+          <body>configure basic  express middleware</body>
+        </ownedComment>
+        <ownedParameter xmi:id="_xP23MKHUEee_8r4lMcK4cA" name="app" isUnique="false"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_WGZPMKHXEee_8r4lMcK4cA" name="SetViewEngine" visibility="protected">
+      <ownedOperation xmi:id="_ZKCmYKHXEee_8r4lMcK4cA" name="hbs">
+        <ownedParameter xmi:id="_7hk6AKJVEee_8r4lMcK4cA" name="app"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_IyZWoKHkEee_8r4lMcK4cA" name="ErrorHandler" visibility="protected">
+      <ownedOperation xmi:id="_XZZOEKJZEee_8r4lMcK4cA" name="get404"/>
+      <ownedOperation xmi:id="_YsJPYKJZEee_8r4lMcK4cA" name="getDevelopError"/>
+      <ownedOperation xmi:id="_aYJeMKJZEee_8r4lMcK4cA" name="getProductionError"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_j7iI8KQaEeeb-7OsezgCHg" name="import" memberEnd="_j7iI8aQaEeeb-7OsezgCHg _j7iwAqQaEeeb-7OsezgCHg" navigableOwnedEnd="_j7iwAqQaEeeb-7OsezgCHg">
+      <ownedEnd xmi:id="_j7iI8aQaEeeb-7OsezgCHg" name="webpackDevHots" type="_vd1RAKG1Eee_8r4lMcK4cA" association="_j7iI8KQaEeeb-7OsezgCHg">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_j7iwAKQaEeeb-7OsezgCHg"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_j7iwAaQaEeeb-7OsezgCHg" value="*"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_j7iwAqQaEeeb-7OsezgCHg" name="webpacks" association="_j7iI8KQaEeeb-7OsezgCHg">
+        <type xmi:type="uml:Class" href="webpack.uml#_cxen8KQYEeeb-7OsezgCHg"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_j7iwA6QaEeeb-7OsezgCHg"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_j7jXEKQaEeeb-7OsezgCHg" value="*"/>
+      </ownedEnd>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_dBjT8KJaEee_8r4lMcK4cA" name="import" memberEnd="_dBjT8aJaEee_8r4lMcK4cA _dBjT9KJaEee_8r4lMcK4cA" navigableOwnedEnd="_dBjT9KJaEee_8r4lMcK4cA">
+    <ownedEnd xmi:id="_dBjT8aJaEee_8r4lMcK4cA" name="apps" type="_vd1RAKG1Eee_8r4lMcK4cA" association="_dBjT8KJaEee_8r4lMcK4cA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_dBjT8qJaEee_8r4lMcK4cA"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_dBjT86JaEee_8r4lMcK4cA" value="*"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_dBjT9KJaEee_8r4lMcK4cA" name="indexs" type="_IyZWoKHkEee_8r4lMcK4cA" association="_dBjT8KJaEee_8r4lMcK4cA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_dBjT9aJaEee_8r4lMcK4cA"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_dBjT9qJaEee_8r4lMcK4cA" value="*"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_Idd8oK1iEeeAic4vwHFx5w" memberEnd="_IdkDQK1iEeeAic4vwHFx5w _IdkqUq1iEeeAic4vwHFx5w" navigableOwnedEnd="_IdkqUq1iEeeAic4vwHFx5w">
+    <ownedEnd xmi:id="_IdkDQK1iEeeAic4vwHFx5w" name="apps" type="_vd1RAKG1Eee_8r4lMcK4cA" association="_Idd8oK1iEeeAic4vwHFx5w">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_IdkqUK1iEeeAic4vwHFx5w"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_IdkqUa1iEeeAic4vwHFx5w" value="*"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_IdkqUq1iEeeAic4vwHFx5w" name="setViewEngines" type="_WGZPMKHXEee_8r4lMcK4cA" association="_Idd8oK1iEeeAic4vwHFx5w">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_IdkqU61iEeeAic4vwHFx5w"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_IdkqVK1iEeeAic4vwHFx5w" value="*"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_I-CTEK1iEeeAic4vwHFx5w" memberEnd="_I-CTEa1iEeeAic4vwHFx5w _I-CTFK1iEeeAic4vwHFx5w" navigableOwnedEnd="_I-CTFK1iEeeAic4vwHFx5w">
+    <ownedEnd xmi:id="_I-CTEa1iEeeAic4vwHFx5w" name="apps" type="_vd1RAKG1Eee_8r4lMcK4cA" association="_I-CTEK1iEeeAic4vwHFx5w">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_I-CTEq1iEeeAic4vwHFx5w"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_I-CTE61iEeeAic4vwHFx5w" value="*"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_I-CTFK1iEeeAic4vwHFx5w" name="middlewareBases" type="_8PQEUKHREee_8r4lMcK4cA" association="_I-CTEK1iEeeAic4vwHFx5w">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_I-CTFa1iEeeAic4vwHFx5w"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_I-CTFq1iEeeAic4vwHFx5w" value="*"/>
+    </ownedEnd>
+  </packagedElement>
+</uml:Model>

@@ -1,0 +1,31 @@
+@startuml
+' interface post
+' interface get
+' interface put
+' interface delete
+' interface request
+
+' package "HttpTool" as hp{
+' 	[default]
+' 	interface send
+
+' 	[default] - send:use
+' }
+' hp-post
+' hp-get
+' hp-put
+' hp-delete
+' hp-request
+
+Class HttpTool {
+	+ typeEnum : Array[]
+	+ showLog : Boolean
+	- log()
+	- send()
+	- print()
+	- printWarn()
+	+ request()
+	+ [typeEnum]()
+}
+note bottom of HttpTool: [typeEnum] is method name list in typeEnum
+@enduml

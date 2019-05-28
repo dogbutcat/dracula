@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_vbeysJ9nEeeAD6hYRFUNkQ" name="server">
+  <packagedElement xmi:type="uml:Package" xmi:id="_DeuekJ9oEeeAD6hYRFUNkQ" name="bin">
+    <packagedElement xmi:type="uml:Association" xmi:id="_UM6fkKNMEee_8r4lMcK4cA" name="use" memberEnd="_UM6fkaNMEee_8r4lMcK4cA _UM6flKNMEee_8r4lMcK4cA" navigableOwnedEnd="_UM6flKNMEee_8r4lMcK4cA">
+      <ownedEnd xmi:id="_UM6fkaNMEee_8r4lMcK4cA" name="commons" type="_NhQMoKS8Eeeb-7OsezgCHg" association="_UM6fkKNMEee_8r4lMcK4cA">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_UM6fkqNMEee_8r4lMcK4cA"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_UM6fk6NMEee_8r4lMcK4cA" value="*"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_UM6flKNMEee_8r4lMcK4cA" name="serverConfigs" association="_UM6fkKNMEee_8r4lMcK4cA">
+        <type xmi:type="uml:Class" href="api.uml#_wHtzAKNLEee_8r4lMcK4cA"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_UM6flaNMEee_8r4lMcK4cA"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_UM6flqNMEee_8r4lMcK4cA" value="*"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_NhQMoKS8Eeeb-7OsezgCHg" name="dracula-cli" visibility="public"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_ltMzQKS8Eeeb-7OsezgCHg" memberEnd="_ltMzQaS8Eeeb-7OsezgCHg _ltMzRKS8Eeeb-7OsezgCHg" navigableOwnedEnd="_ltMzRKS8Eeeb-7OsezgCHg">
+      <ownedEnd xmi:id="_ltMzQaS8Eeeb-7OsezgCHg" name="dracula-clis" type="_NhQMoKS8Eeeb-7OsezgCHg" association="_ltMzQKS8Eeeb-7OsezgCHg">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ltMzQqS8Eeeb-7OsezgCHg"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ltMzQ6S8Eeeb-7OsezgCHg" value="*"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_ltMzRKS8Eeeb-7OsezgCHg" name="apps" association="_ltMzQKS8Eeeb-7OsezgCHg">
+        <type xmi:type="uml:Class" href="network.uml#_vd1RAKG1Eee_8r4lMcK4cA"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ltMzRaS8Eeeb-7OsezgCHg"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ltMzRqS8Eeeb-7OsezgCHg" value="*"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_Gapg4KS9Eeeb-7OsezgCHg" memberEnd="_Gapg4aS9Eeeb-7OsezgCHg _Gapg5KS9Eeeb-7OsezgCHg" navigableOwnedEnd="_Gapg5KS9Eeeb-7OsezgCHg">
+      <ownedEnd xmi:id="_Gapg4aS9Eeeb-7OsezgCHg" name="dracula-clis" type="_NhQMoKS8Eeeb-7OsezgCHg" association="_Gapg4KS9Eeeb-7OsezgCHg">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Gapg4qS9Eeeb-7OsezgCHg"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Gapg46S9Eeeb-7OsezgCHg" value="*"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_Gapg5KS9Eeeb-7OsezgCHg" name="webpacks" association="_Gapg4KS9Eeeb-7OsezgCHg">
+        <type xmi:type="uml:Class" href="webpack.uml#_cxen8KQYEeeb-7OsezgCHg"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Gapg5aS9Eeeb-7OsezgCHg"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Gapg5qS9Eeeb-7OsezgCHg" value="*"/>
+      </ownedEnd>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Component" xmi:id="_OQTmAKTzEeeb-7OsezgCHg" name="HTTPTools"/>
+  <packagedElement xmi:type="uml:Component" xmi:id="_UPYMgKTzEeeb-7OsezgCHg" name="Express">
+    <interfaceRealization xmi:id="_BXmYwKT0Eeeb-7OsezgCHg" client="_UPYMgKTzEeeb-7OsezgCHg" supplier="_8p2QMKTzEeeb-7OsezgCHg" contract="_8p2QMKTzEeeb-7OsezgCHg"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Interface" xmi:id="_dNORQKTzEeeb-7OsezgCHg" name="post"/>
+  <packagedElement xmi:type="uml:Usage" xmi:id="_sYwAQKTzEeeb-7OsezgCHg" client="_OQTmAKTzEeeb-7OsezgCHg" supplier="_dNORQKTzEeeb-7OsezgCHg"/>
+  <packagedElement xmi:type="uml:Interface" xmi:id="_8p2QMKTzEeeb-7OsezgCHg" name="post"/>
+</uml:Model>

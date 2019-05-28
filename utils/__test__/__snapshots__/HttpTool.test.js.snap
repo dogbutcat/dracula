@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HttpTool TestSuit can reset property os through clear function 1`] = `
+Object {
+  "Content-Type": "application/json;charset=utf-8",
+  "os": "web_0.0.1",
+}
+`;
+
+exports[`HttpTool TestSuit formatParamsTools output string connect with & 1`] = `"a=1&b=2"`;
+
+exports[`HttpTool TestSuit formatParamsTools output string connect with & 2`] = `"a=1&b=1%2C2%2C3"`;
+
+exports[`HttpTool TestSuit formatParamsTools output string connect with & 3`] = `"a=%5Bobject%20Object%5D&b=1%2C2%2C3"`;
+
+exports[`HttpTool TestSuit should init function with safe preset work properly 1`] = `
+Object {
+  "data": "123{\\"os\\":\\"web_0.0.1\\",\\"param\\":{}}",
+  "key": "key",
+}
+`;

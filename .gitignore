@@ -1,0 +1,14 @@
+node_modules
+**/.DS_Store
+.vscode
+.history
+.idea
+runtime
+.npm
+.directory
+public.zip
+public.rar
+public/project/*
+public/filetmp/*
+package-lock.json
+**/npm-debug.log*

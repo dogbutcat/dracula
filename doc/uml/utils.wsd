@@ -1,0 +1,13 @@
+@startuml
+' Interface
+
+
+' Component
+[HttpTool] as http
+[CookieHelp] as cookie
+[index] as index
+
+http -> index
+cookie -> index
+
+@enduml

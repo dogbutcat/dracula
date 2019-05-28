@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_PTp9cKGSEeeAD6hYRFUNkQ" name="api">
+  <packagedElement xmi:type="uml:Class" xmi:id="_BmPxMKJhEee_8r4lMcK4cA" name="ExternalConfig" visibility="protected">
+    <ownedAttribute xmi:id="_KFouoKJ9Eee_8r4lMcK4cA" name="externalConfig" visibility="protected">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KFouoaJ9Eee_8r4lMcK4cA"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KFouoqJ9Eee_8r4lMcK4cA" value="1"/>
+    </ownedAttribute>
+    <ownedOperation xmi:id="_GNuSoKJhEee_8r4lMcK4cA" name="getExternalConfig" isStatic="true">
+      <ownedComment xmi:id="_huticKJhEee_8r4lMcK4cA" annotatedElement="_GNuSoKJhEee_8r4lMcK4cA">
+        <body>get external config based on process.cwd() directory</body>
+      </ownedComment>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_oCkQ0KNLEee_8r4lMcK4cA" name="webpackConfig" visibility="public">
+    <ownedOperation xmi:id="_utDy4KNLEee_8r4lMcK4cA" name="getWebpackConfig">
+      <ownedParameter xmi:id="_mtRigKjVEeezYck2nw3S5g" name="mode">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedParameter>
+    </ownedOperation>
+    <ownedOperation xmi:id="_utDy4qNLEee_8r4lMcK4cA" name="getWebpackPath"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_wHtzAKNLEee_8r4lMcK4cA" name="serverConfig" visibility="public">
+    <ownedOperation xmi:id="_z5KEUKNLEee_8r4lMcK4cA" name="getServerConfig"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_h545wKP4Eeeb-7OsezgCHg" memberEnd="_h545waP4Eeeb-7OsezgCHg _h545xKP4Eeeb-7OsezgCHg" navigableOwnedEnd="_h545xKP4Eeeb-7OsezgCHg">
+    <ownedEnd xmi:id="_h545waP4Eeeb-7OsezgCHg" name="serverConfigs" type="_oCkQ0KNLEee_8r4lMcK4cA" association="_h545wKP4Eeeb-7OsezgCHg">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_h545wqP4Eeeb-7OsezgCHg"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_h545w6P4Eeeb-7OsezgCHg" value="*"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_h545xKP4Eeeb-7OsezgCHg" name="settings" association="_h545wKP4Eeeb-7OsezgCHg">
+      <type xmi:type="uml:Class" href="config.uml#_bOUXgKMlEee_8r4lMcK4cA"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_h545xaP4Eeeb-7OsezgCHg"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_h545xqP4Eeeb-7OsezgCHg" value="*"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_ihOmkKP4Eeeb-7OsezgCHg" memberEnd="_ihOmkaP4Eeeb-7OsezgCHg _ihOmlKP4Eeeb-7OsezgCHg" navigableOwnedEnd="_ihOmlKP4Eeeb-7OsezgCHg">
+    <ownedEnd xmi:id="_ihOmkaP4Eeeb-7OsezgCHg" name="webpackConfigs" type="_wHtzAKNLEee_8r4lMcK4cA" association="_ihOmkKP4Eeeb-7OsezgCHg">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ihOmkqP4Eeeb-7OsezgCHg"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ihOmk6P4Eeeb-7OsezgCHg" value="*"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_ihOmlKP4Eeeb-7OsezgCHg" name="settings" association="_ihOmkKP4Eeeb-7OsezgCHg">
+      <type xmi:type="uml:Class" href="config.uml#_SOZ_4KGpEee_8r4lMcK4cA"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ihOmlaP4Eeeb-7OsezgCHg"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ihOmlqP4Eeeb-7OsezgCHg" value="*"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_yjzS8K1nEeeAic4vwHFx5w" memberEnd="_yjzS8a1nEeeAic4vwHFx5w _yjz6Aq1nEeeAic4vwHFx5w" navigableOwnedEnd="_yjz6Aq1nEeeAic4vwHFx5w">
+    <ownedEnd xmi:id="_yjzS8a1nEeeAic4vwHFx5w" name="serverConfigs" type="_wHtzAKNLEee_8r4lMcK4cA" association="_yjzS8K1nEeeAic4vwHFx5w">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_yjz6AK1nEeeAic4vwHFx5w"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_yjz6Aa1nEeeAic4vwHFx5w" value="*"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_yjz6Aq1nEeeAic4vwHFx5w" name="bases" type="_BmPxMKJhEee_8r4lMcK4cA" association="_yjzS8K1nEeeAic4vwHFx5w">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_yjz6A61nEeeAic4vwHFx5w"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_yjz6BK1nEeeAic4vwHFx5w" value="*"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_zM56UK1nEeeAic4vwHFx5w" memberEnd="_zM6hYK1nEeeAic4vwHFx5w _zM6hY61nEeeAic4vwHFx5w" navigableOwnedEnd="_zM6hY61nEeeAic4vwHFx5w">
+    <ownedEnd xmi:id="_zM6hYK1nEeeAic4vwHFx5w" name="webpackConfigs" type="_oCkQ0KNLEee_8r4lMcK4cA" association="_zM56UK1nEeeAic4vwHFx5w">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_zM6hYa1nEeeAic4vwHFx5w"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_zM6hYq1nEeeAic4vwHFx5w" value="*"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_zM6hY61nEeeAic4vwHFx5w" name="bases" type="_BmPxMKJhEee_8r4lMcK4cA" association="_zM56UK1nEeeAic4vwHFx5w">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_zM6hZK1nEeeAic4vwHFx5w"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_zM6hZa1nEeeAic4vwHFx5w" value="*"/>
+    </ownedEnd>
+  </packagedElement>
+</uml:Model>

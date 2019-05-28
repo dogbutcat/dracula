@@ -1,0 +1,49 @@
+@startuml
+title Set_Host_IP
+start
+:get req;
+partition SplitURL_func {
+	if(ipPass.type == path)then(yes)
+		if(req.headers.referer exists?)then(yes)
+			:match regex;
+		else(no)
+			:referArr=[];
+		endif
+	elseif(ipPass.type == query)then(yes)
+		if(req.headers.referer match regex)then(yes)
+			:match regex;
+		else(no)
+			:referArr=[];
+		endif
+	else(no)
+	:referArr=[];
+	endif
+	:return referArr;
+}
+
+partition ipFilter_func {
+	:get req and refererArr;
+	if(DEV mode && referArr.length > 0)then(yes)
+		:setHost according to referArr;
+	else(no)
+		if(header ipkey exists?)then(yes)
+			:setHost according to ipkey;
+		else(no)
+			:reset to default;
+		endif
+	endif
+}
+
+partition checkAddrMap_func {
+	:get req;
+	:get referer uri in headers;
+	:result = global.getMappedAddr(referUrl)|
+	if(result)then(exists)
+		:set host to result;
+	else(not exists)
+		:reset to default;
+	endif
+}
+stop
+
+@enduml

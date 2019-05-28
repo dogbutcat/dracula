@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_4yOhkKKGEee_8r4lMcK4cA" name="webpack">
+  <packagedElement xmi:type="uml:Class" xmi:id="_cxen8KQYEeeb-7OsezgCHg" name="webpack" visibility="public"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_XZcC4KQxEeeb-7OsezgCHg" memberEnd="_XZcC4aQxEeeb-7OsezgCHg _XZcC5KQxEeeb-7OsezgCHg" navigableOwnedEnd="_XZcC5KQxEeeb-7OsezgCHg">
+    <ownedEnd xmi:id="_XZcC4aQxEeeb-7OsezgCHg" name="webpacks" type="_cxen8KQYEeeb-7OsezgCHg" association="_XZcC4KQxEeeb-7OsezgCHg">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_XZcC4qQxEeeb-7OsezgCHg"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_XZcC46QxEeeb-7OsezgCHg" value="*"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_XZcC5KQxEeeb-7OsezgCHg" name="webpackConfigs" association="_XZcC4KQxEeeb-7OsezgCHg">
+      <type xmi:type="uml:Class" href="api.uml#_oCkQ0KNLEee_8r4lMcK4cA"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_XZcC5aQxEeeb-7OsezgCHg"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_XZcC5qQxEeeb-7OsezgCHg" value="*"/>
+    </ownedEnd>
+  </packagedElement>
+</uml:Model>

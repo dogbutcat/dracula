@@ -1,0 +1,94 @@
+GET http://localhost:3001/192.168.44.100 HTTP/1.1
+
+###
+
+POST http://localhost:3001/api/get HTTP/1.1
+referer: http://localhost:3001/10.0.0.182:9092
+API: /suppliers/v1.0/login
+
+###
+
+POST http://10.0.0.182:9092/suppliers/v1.0/login
+Content-Type: application/json
+
+{"account":"armadmin","password":"cbeb1f55874b5b653b47205b14989c25"}
+
+###
+
+POST http://10.0.0.182:9092/suppliers/v1.0/current
+Content-Type: application/json
+accessToken: {"userId": "348a6a4938524d1594eaefff1d7d92e7","accountId": "41400e2f87954832b5073763747482ba","accountType": 8,"userName": "14566666666","secret": "60c36e216f5d20f0c822a3fce3f5c99e","index": 1,"ahead": 1505282028615 }
+
+###
+POST http://10.0.0.182:9092/draculaAirline/v1.0/refresh
+accept:"*/*"
+Accept:"application/json"
+accept-encoding:"gzip, deflate, br"
+accept-language:"zh-CN,zh;q=0.8,ja;q=0.6,en;q=0.4"
+accesstoken:"%7B%22userId%22%3A%22a4540d84112145f19a4861d9ea5cf79e%22%2C%22accountId%22%3A%22d8e80daa1fdb4426abdd41557b0511c8%22%2C%22accountType%22%3A8%2C%22userName%22%3A%2215088694443%22%2C%22secret%22%3A%223604c3f7a6c98a95d798854018c33eee%22%2C%22index%22%3A38%2C%22ahead%22%3A1505793010490%7D"
+api: /draculaAirline/v1.0/refresh
+cache-control:"no-cache"
+connection:"keep-alive"
+content-length:134
+content-type:"application/json; charset=UTF-8"
+cookie:"leftCookieFlg=true; USERINFOADMIN_CRM=%7B%22username%22:%2215088694443%22,%22accessToken%22:%22%257B%2522userId%2522%253A%2522a4540d84112145f19a4861d9ea5cf79e%2522%252C%2522accountId%2522%253A%2522d8e80daa1fdb4426abdd41557b0511c8%2522%252C%2522accountType%2522%253A8%252C%2522userName%2522%253A%252215088694443%2522%252C%2522secret%2522%253A%25222a3265a689337c9b07edb387db90a92e%2522%252C%2522index%2522%253A26%252C%2522ahead%2522%253A1505556627131%257D%22,%22refreshToken%22:%22%257B%2522userId%2522%253A%2522a4540d84112145f19a4861d9ea5cf79e%2522%252C%2522secret%2522%253A%2522c37ad4001d56123ae4ad80103a40401c%2522%257D%22,%22expireTime%22:%222017-09-16%2010:59:11.677%22,%22failureTime%22:%222017-09-16%2012:14:11.677%22,%22moduleGroupDtoLinkedList%22:%5B%7B%22title%22:%22%E8%88%AA%E7%BA%BF%E7%AE%A1%E7%90%86%22,%22iconSrc%22:%22http://ow5efevtv.bkt.clouddn.com/icon_flightManage.png%22,%22iconSrcActive%22:%22http://ow5efevtv.bkt.clouddn.com/icon_flightManage_active.png%22,%22data%22:%5B%7B%22title%22:%22%E8%88%AA%E7%...
+dnt:"1"
+pragma:"no-cache"
+reflink:"0"
+user-agent:"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36"
+
+{"refreshToken":"%7B%22userId%22%3A%22a4540d84112145f19a4861d9ea5cf79e%22%2C%22secret%22%3A%22de5a288e4ec137af9a6017e22353a8f1%22%7D"}
+
+###
+POST http://localhost:3001/api/post HTTP/1.1
+api:/
+ips_key: dcIP
+
+###
+GET http://localhost:3001 HTTP/1.1
+User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0)
+# User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36
+
+###
+# GET http://weixin.sogou.com/weixin?type=2&query=%E5%B0%8F%E7%A8%8B%E5%BA%8F&ie=utf8&s_from=input&_sug_=n&_sug_type_=&w=01015002&oq=&ri=0&sourceid=sugg&sut=2580&sst0=1508120753929&lkt=1%2C1508120753815%2C1508120753815 HTTP/1.1
+GET http://weixin.sogou.com/weixin?type=2&ie=utf8&query=%E5%B0%8F%E7%A8%8B%E5%BA%8F&tsn=1&ft=&et=&interation=&wxid=&usip= HTTP/1.1
+Referer: http://weixin.sogou.com/weixin
+User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0)
+# Cookie:SUV=00A517557011515B59E4166FBBF6D956; ABTEST=0|1508120175|v1; SNUID=52591878090C53A89F554E0A0952ACE9; IPLOC=CN3301; SUID=5B5111704631990A0000000059E4166F; SUID=5B5111702320940A0000000059E41670; JSESSIONID=aaaE0DjiryXEf-tqPbv8v; weixinIndexVisited=1; sct=2
+
+###
+POST http://192.168.0.237:8080/flightapi/v1.0/flights/query HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+{"depCity":"上海","arrCity":"北京","depDate":"2017-10-14","flightType":"1"}
+
+###
+POST http://localhost:3000/upload
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="app.js"
+Content-Type: text/plain
+
+< ./app.js
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+POST http://192.168.0.180:6006/api/app/getAPPHotPatch HTTP/1.1
+Content-Type: application/json
+
+{ 
+	"phash": null,
+	"package": "com.android.dracula",
+	"type": 1,
+	"vcode": "10.1.0"
+}
+
+###
+POST http://192.168.3.240:6031/api/test/getHaha HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+{
+	id: xxx
+}
