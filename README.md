@@ -2,6 +2,22 @@
 
 🧛Comes from 🏰 and 👿, it work as basic dev structure & simple api proxy.
 
+## CHANGELOG
+
+> 2019/05
+
+- ADD MIT license
+- UPDATE bundler version to `webpack 4.x`, `babel 7.x`
+- UPDATE install package process check function to `npm search`
+- UPDATE server side rendering
+- UPDATE default babel loader support `.babelrc`
+
+> 2019/04
+
+- ADD auto install package webpack plugin
+- UPDATE webpack bundler from main to child process
+- UPDATE auto refresh server config under dev mode
+
 ## Getting Started
 
 1. 新建一个git空项目

@@ -1,8 +1,14 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { browserHistory, match,Router } from 'react-router';
-import routes from './routes.js';
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
+// import { renderRoutes } from "react-router-config";
+import App from "./main/App";
+import routes from "./routes.js";
 
-match({ history:browserHistory, routes:routes }, (error, redirectLocation, renderProps) => {
-    ReactDOM.render(<Router {...renderProps} />, document.getElementById("root"));
-});
+ReactDOM.render(
+    <BrowserRouter>
+        <App />
+        {/* {renderRoutes(routes)} */}
+    </BrowserRouter>,
+    document.getElementById("root")
+);

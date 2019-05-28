@@ -1,18 +1,9 @@
 import React, { Component } from "react";
 
 import less from "./None.less";
-class None extends Component {
+export default class None extends Component {
 	constructor(props) {
 		super(props);
-	}
-	static childContextTypes = {
-		router: React.PropTypes.object
-	};
-
-	getChildContext() {
-		return {
-			router: this.props.router
-		};
 	}
 
 	render() {
@@ -26,4 +17,3 @@ class None extends Component {
 	}
 }
 
-module.exports = None;

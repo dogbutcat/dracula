@@ -13,22 +13,21 @@ PkgInstallPlugin.prototype.apply = function(compiler) {
                     let errDependencies = errItem.dependencies,
                         missingPkgList = [];
                     errDependencies.forEach(errDep => {
-                        if (
-                            errDep.type === "cjs require" &&
-                            isNpmPkg(errDep.request)
-                        ) {
+                        if (isNpmPkg(errDep.request)) {
                             missingPkgList.push(errDep.request);
                         }
                     });
 
-                    setTimeout(function() {
-                        process.send(
-                            new IPCData({
-                                type: CUSTOM_SIGNAL.INSTALL_PKG,
-                                data: [...new Set(missingPkgList)] // filter out same value
-                            }).toString()
-                        );
-                    }, 1000); // setTimeout for output latency
+                    if (missingPkgList.length > 0) {
+                        setTimeout(function() {
+                            process.send(
+                                new IPCData({
+                                    type: CUSTOM_SIGNAL.INSTALL_PKG,
+                                    data: [...new Set(missingPkgList)] // filter out same value
+                                }).toString()
+                            );
+                        }, 1000); // setTimeout for output latency
+                    }
                 }
             });
         }

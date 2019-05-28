@@ -76,7 +76,7 @@ function debugSect() {
                 setTimeout(() => {
                     LogHelper.clear();
                     serverFork = childProcess.fork(devProcessFile);
-                }, 1000);
+                }, 5000);
             }
         }
     });

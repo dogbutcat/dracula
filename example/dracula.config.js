@@ -1,4 +1,4 @@
-let _isDev = process.env.NODE_ENV == 'development';
+let _isDev = process.env.NODE_ENV == "development";
 module.exports = {
     server: {
         DEV: _isDev,
@@ -18,70 +18,81 @@ module.exports = {
         assetPath: "./public",
         viewPath: _isDev ? "./view" : "./views"
     },
-    webpack: function () {
+    webpack: function() {
         var path = require("path");
         var childProcess = require("child_process");
         const HtmlWebpackPlugin = require("html-webpack-plugin");
-        const ExtractTextPlugin = require("extract-text-webpack-plugin");
-        var extractApin = new ExtractTextPlugin({
-            filename: "apin.css",
-            allChunks: true
-        });
-        var extractSrc = new ExtractTextPlugin({
-            filename: "src.css",
-            allChunks: true
-        });
+
         var defaultPlugin = require("./lib/config/webpack/plugins");
         var defaultLoader = require("./lib/config/webpack/loader");
+        var defaultMix = require("./lib/config/webpack/mix");
         var extThemePath = path.resolve(__dirname, "./src/theme.less");
 
+        let extractDracula = defaultMix.extractcss({
+            reg: /^(?!.*?(\\|\/)src(\\|\/)).*less$/,
+            styleOption: {
+                less: {
+                    extFile: extThemePath
+                }
+            },
+            extractOption: {
+                filename: "dracula.css",
+                chunkFilename: "dracula-[id].css"
+            }
+        });
+        let extractStyle = defaultMix.extractcss({
+            reg: /(.*?(\\|\/)src(\\|\/)).*less$/,
+            extractOption: {
+                filename: "src.css",
+                chunkFilename: "src-[id].css"
+            }
+        });
+
         var configModuleDebug = {
-            loaders: [
+            rules: [
                 defaultLoader.babel(),
                 defaultLoader.css(),
-                defaultLoader.less(/^(?!.*?(\\|\/)src(\\|\/)).*less$/, extThemePath),
+                defaultLoader.less(
+                    /^(?!.*?(\\|\/)src(\\|\/)).*less$/,
+                    extThemePath
+                ),
                 defaultLoader.less(/(.*?(\\|\/)src(\\|\/)).*less$/),
                 defaultLoader.images()
             ]
         };
         var configModule = {
-            loaders: [
+            rules: [
                 defaultLoader.babel(),
                 defaultLoader.css(),
-                {
-                    test: /^(?!.*?(\\|\/)src(\\|\/)).*less$/,
-                    loader: extractApin.extract(
-                        defaultLoader.getlessStr(extThemePath, true)
-                    )
-                },
-                {
-                    test: /(.*?(\\|\/)src(\\|\/)).*less$/,
-                    loader: extractSrc.extract(defaultLoader.getlessStr(null, true))
-                },
+                extractDracula[0],
+                extractStyle[0],
                 defaultLoader.images()
             ]
         };
 
         var commonPlugins = [
-			new HtmlWebpackPlugin({
-				filename: "../../views/error.hbs",
-				template: "view/error.hbs",
-				inject: false
-			}),
-			new HtmlWebpackPlugin({
-				filename: "../../views/index.hbs",
-				template: "view/index.hbs",
-				inject: false,
+            new HtmlWebpackPlugin({
+                filename: "../../views/error.hbs",
+                template: "view/error.hbs",
+                inject: false
+            }),
+            new HtmlWebpackPlugin({
+                filename: "../../views/index.hbs",
+                template: "view/index.hbs",
+                inject: false,
                 hash: true,
-                builtInfo: `\n\tbuild on Date: ${(new Date()).toUTCString()} \n\tgit rev: ${childProcess.execSync("git rev-parse --short HEAD").toString()}`
-			}),
-		];
+                //uncomment below to add rev tag
+                // builtInfo: `\n\tbuild on Date: ${(new Date()).toUTCString()} \n\tgit rev: ${childProcess.execSync("git rev-parse --short HEAD").toString()}`
+            })
+        ];
 
         var releaseDefine =
             process.env.NODE_ENV != "production"
                 ? defaultPlugin.definePlugin({
-                    "process.env": {NODE_ENV: JSON.stringify(process.env.NODE_ENV)}
-                })
+                      "process.env": {
+                          NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+                      }
+                  })
                 : defaultPlugin.definePlugin();
 
         return {
@@ -95,9 +106,7 @@ module.exports = {
                         publicPath: "/project/"
                     },
                     module: configModuleDebug,
-                    plugins: [
-                        ...commonPlugins
-                    ]
+                    plugins: [...commonPlugins]
                 }
             },
             release: {
@@ -115,19 +124,21 @@ module.exports = {
                     plugins: [
                         ...commonPlugins,
                         //删除上次打包结果
-                        defaultPlugin.cleanWebpackPlugin(["public/project","views"], {
-                            root: path.join(__dirname), //一个根的绝对路径.
-                            verbose: true,
-                            dry: false,
-                            exclude: ["src"] ////排除不删除的目录，主要用于避免删除公用的文件
+                        defaultPlugin.cleanWebpackPlugin({
+                            cleanOnceBeforeBuildPatterns: [
+                                "**/*",
+                                path.resolve(__dirname, "./views")
+                            ], //一个根的绝对路径.
+                            verbose: true
                         }),
-                        extractApin,
-                        extractSrc,
-                        defaultPlugin.cssSplitPlugin({size: 4000, imports: false}),
-                        defaultPlugin.noEmitError(),
+                        extractDracula[1],
+                        extractStyle[1],
+                        defaultPlugin.cssSplitPlugin({
+                            size: 4000,
+                            imports: false
+                        }),
                         releaseDefine,
                         defaultPlugin.es3ifyPlugin(), // MUST put before uglify or it not work
-                        defaultPlugin.uglify(),
                         defaultPlugin.compressPlugin()
                     ]
                 }

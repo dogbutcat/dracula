@@ -1,26 +1,9 @@
-/**
- * Http request module, implement [post, get, put, delete] method
- * @module Httptool
- */
-
-/**
- * @typedef {function(string,Function,Function,Object,{safe:boolean,contentType:string,timeout:number}):void} RequestFunc
- */
-
 import axios from "axios";
 import _ from "lodash";
 import Safe from "./Safe.js";
 import CookieHelp from "./CookieHelp";
 
 let localSafe = null;
-/**
- * Response filter function
- * @type {function(number, Function, Function): boolean}
- * @param {number} code - response code, 
- * @param {Function} successCallbackDelegate - success callback for execute
- * @param {Function} failureCallbackDelegate - failure callback for execute
- * @returns {boolean} result - need to process next
- */
 let spEvtCb = null;
 let un_id = "";
 let os = "web_0.0.1";
@@ -44,27 +27,15 @@ let typeEnum = {
 	DELETE: "delete"
 };
 
-/**
- * @typedef {'get'|'post'|'put'|'delete'} reqEnum
- */
-
-/**
- * @class HttpTool
- */
 let HttpTool = {
-	/**
-	 * set OS
-	 * @typedef {function(string):void} setOS
-	 * @param {string} val - set request os part
-	 */
 	setOS(val) {
 		os = val;
 	},
 
 	/**
 	 * set auth header
-	 * @param {any} val - authorize header object
-	 * @param {string} [cookieName] - storage cookie name
+	 * @param val authorize header object
+	 * @param cookieName(optional) storage cookie name
 	 */
 	setAuthHeader(val, cookieName) {
 		let authCookie = null;
@@ -76,48 +47,24 @@ let HttpTool = {
 		authHeader = val;
 	},
 
-	/**
-	 * set encrypt key
-	 * @param {string} key - public key
-	 */
 	setEncrypt(key) {
 		localSafe = new Safe(key);
 	},
 
-	/**
-	 * this callback is for external execute
-	 * @callback filterFunction
-	 * @param {number} responseCode - if external
-	 * @param {Function} success - target success callback function
-	 * @param {Function} failure - target failure callback function
-	 * @returns {boolean|undefined|null} return false
-	 */
-
-	/**
-	 * set filter code event
-	 * @param {filterFunction} cb - callback for filter
-	 */
 	setSpecialCodeEvent(cb) {
-		spEvtCb = (code, success, failure) => {
+		spEvtCb = code => {
 			if (typeof cb === "function") {
-				return cb(code, success, failure);
+				return cb(code);
 			} else {
 				return true; // true means continue to normal steps;
 			}
 		};
 	},
 
-	/**
-	 * clear set os
-	 */
 	clearOS() {
 		os = "web_0.0.1";
 	},
 
-	/**
-	 * clear auth header with custom name
-	 * @param {string=} cookieName - custom name
-	 */
 	clearAuthHeader(cookieName) {
 		let authCookie = null;
 		if (cookieName) {
@@ -128,25 +75,19 @@ let HttpTool = {
 		authHeader = null;
 	},
 
-	/**
-	 * clear encrypt
-	 */
 	clearEncrypt() {
 		localSafe = null;
 	},
 
-	/**
-	 * clear filter function
-	 */
 	clearSpecialCodeEvent() {
 		spEvtCb = null;
 	},
 
 	/**
-	 * format request body exclude {@link typeEnum} get method
-	 * @param {string|*} key - RSA encrypt key
-	 * @param {Object} [param={}] - AES encrypt target object
-	 * @returns {{key: (string|*), data: string}}
+	 *
+	 * @param key
+	 * @param param _开始参数,为不用参数
+	 * @returns {{key: (string|*|WordArray), data: *}}
 	 */
 	formatBody(key, param = {}) {
 		//localSafe.AESDecrypt(key,a)
@@ -175,10 +116,6 @@ let HttpTool = {
 		};
 	},
 
-	/**
-	 * format to form data body
-	 * @param {Object} params - body param
-	 */
 	formatParamsTools(params) {
 		let paramsBody = "";
 		let i = 0;
@@ -193,10 +130,6 @@ let HttpTool = {
 		return paramsBody;
 	},
 
-	/**
-	 * clear extra param
-	 * @param {*} [param={}] - clear extra property in param
-	 */
 	clearParam(param = {}) {
 		if (param) {
 			delete param.navigator;
@@ -204,47 +137,41 @@ let HttpTool = {
 			//POST请求,用来跨域
 		}
 	},
-	// removeEmpty(obj) {
-	// 	if (typeof obj === "object") {
-	// 		for (let key in obj) {
-	// 			//判断是否为NULL
-	// 			// log("obj"+key+":"+obj[key])
-	// 			if (obj[key] === undefined || obj[key] === null) {
-	// 				obj[key] = "";
-	// 				// log("修改"+key+":"+obj[key])
-	// 			} else {
-	// 				HttpTool.removeEmpty(obj[key]);
-	// 			}
-	// 		}
-	// 	} else if (HttpTool.isArray(obj)) {
-	// 		for (let v of obj) {
-	// 			HttpTool.removeEmpty(v);
-	// 		}
-	// 	} else {
-	// 		//其他类型
-	// 	}
-	// 	return obj;
-	// },
+	removeEmpty(obj) {
+		if (typeof obj === "object") {
+			for (let key in obj) {
+				//判断是否为NULL
+				// _log("obj"+key+":"+obj[key])
+				if (obj[key] === undefined || obj[key] === null) {
+					obj[key] = "";
+					// _log("修改"+key+":"+obj[key])
+				} else {
+					HttpTool.removeEmpty(obj[key]);
+				}
+			}
+		} else if (HttpTool.isArray(obj)) {
+			for (let v of obj) {
+				HttpTool.removeEmpty(v);
+			}
+		} else {
+			//其他类型
+		}
+		return obj;
+	},
 	isArray(object) {
 		return object && typeof object === "object" && Array == object.constructor;
 	},
-	// randomString(len) {
-	// 	len = len || 32;
-	// 	var $chars = "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678";
-	// 	/****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
-	// 	var maxPos = $chars.length;
-	// 	var pwd = "";
-	// 	for (var i = 0; i < len; i++) {
-	// 		pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
-	// 	}
-	// 	return pwd;
-	// },
-	/**
-	 * change encryption option according to array
-	 * @param {string} url - target api
-	 * @param {Object} other - request options
-	 * @param {string[]} noEncryptArr - exclude encryption api array
-	 */
+	randomString(len) {
+		len = len || 32;
+		var $chars = "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678";
+		/****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+		var maxPos = $chars.length;
+		var pwd = "";
+		for (var i = 0; i < len; i++) {
+			pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+		}
+		return pwd;
+	},
 	changeEncryptOpt(url, other, noEncryptArr) {
 		if (!url) {
 			return other;
@@ -260,10 +187,6 @@ let HttpTool = {
 		}
 		return other;
 	},
-	/**
-	 * get request header
-	 * @param {Object} other - request options
-	 */
 	getRequestHeader(other) {
 		return authHeader
 			? _.merge({}, authHeader, {
@@ -422,13 +345,13 @@ HttpTool["init"] = function init(options) {
 };
 
 /**
- * 请求入口
+ *
  * @param reqType 请求类型 put/get/post/delete
  * @param url 请求URL
  * @param successCallback 成功返回:包含 code, message, json, option
  * @param failCallback 失败返回:code, message, option
  * @param param 请求参数 例:{id:1}
- * @param other 其他参数 {safe:boolean类型 true/加密(默认) false/不加密}
+ * @param other 其他参数  {safa:booble类型 true/加密(默认) false/不加密}
  */
 function mainReq(reqType, url, successCallback, failCallback, param, other) {
 	//option 参数必须是对象,里面包括 (type 请求方式,url 请求路径,param 请求参数)
@@ -476,7 +399,10 @@ function mainReq(reqType, url, successCallback, failCallback, param, other) {
 		url: host,
 		method: reqType.toLowerCase(),
 		headers,
-		timeout: other['timeout'] != 0 && other['timeout'] ? parseInt(other.timeout) * 1000 : 11000
+		timeout:
+			other["timeout"] != 0 && other["timeout"]
+				? parseInt(other.timeout) * 1000
+				: 11000
 	};
 	reqType === "get" ? (options["params"] = param) : (options["data"] = body);
 	axios(options)
@@ -521,27 +447,32 @@ function mainReq(reqType, url, successCallback, failCallback, param, other) {
 				host: host,
 				option: json.option
 			};
-			log("------success--------");
-			log(option);
-			log(json);
-
-			if (spEvtCb) {
-				if (!spEvtCb(option.code, () => {
-					successCallback(option.code, option.message, json.data, option);
-				}, () => {
-					failCallback(option.code, option.message, option);
-				})) {
-					return;
+			// _log("------success--------");
+			// _log(option);
+			// _log(json);
+			_logger.setRespData(option.code > 0, { option, data: json.data });
+			_logger.printData();
+			try {
+				if (option.code > 0) {
+					if (!spEvtCb) {
+						successCallback(option.code, option.message, json.data, option);
+					} else {
+						if (spEvtCb(option.code)) {
+							successCallback(option.code, option.message, json.data, option);
+						}
+					}
+				} else {
+					if (!spEvtCb) {
+						failCallback(option.code, option.message, option);
+					} else {
+						if (spEvtCb(option.code)) {
+							failCallback(option.code, option.message, option);
+						}
+					}
 				}
 			} catch (error) {
 				_log("-----callback execute error---------");
 				console.error(error);
-			}
-
-			if (option.code > 0) {
-				successCallback(option.code, option.message, json.data, option);
-			} else {
-				failCallback(option.code, option.message, option);
 			}
 		})
 		.catch(error => {

@@ -4,7 +4,7 @@
  */
 let CookieHelp = {
 	clearFlag: 'none',
-	userCookieKey: "DEMON_USER",
+	userCookieKey: "DRACULA_USER",
 	//获取用户信息
 	//获取用户信息
 	getUserInfo(keyName) {

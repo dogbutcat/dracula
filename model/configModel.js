@@ -42,6 +42,10 @@ class ServerModel {
         return this._ssr;
     }
 
+    set ssr(val){
+        this._ssr = val;
+    }
+
     get restfulSupport(){
         return this._restfulSupport;
     }
