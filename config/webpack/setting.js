@@ -153,7 +153,6 @@ module.exports = {
             defaultPlugin.cleanWebpackPlugin({
                 cleanOnceBeforeBuildPatterns: ["**/*"], //一个根的绝对路径.
                 verbose: true,
-                dry: true
             }),
             extractDracula[1],
             extractStyle[1],

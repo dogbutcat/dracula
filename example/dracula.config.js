@@ -1,3 +1,7 @@
+/**
+ * * dynamic import deps has problem
+ * {@link https://github.com/webpack/webpack/issues/8656#issuecomment-496822882}
+ */
 let _isDev = process.env.NODE_ENV == "development";
 module.exports = {
     server: {
