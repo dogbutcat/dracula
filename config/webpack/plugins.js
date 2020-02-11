@@ -1,6 +1,7 @@
 const webpack = require("webpack"),
     LogHelper = require("../../tools/LogHelper"),
-    _ = require("lodash");
+    _ = require("lodash"),
+    ManifestJsonPlugin = require('../../webpack/manifestPlugin');
 
 function _deprecatedWarning(olds, news) {
     LogHelper.log(
@@ -106,6 +107,19 @@ const pluginList = {
             extOpt || {}
         );
         return new webpack.LoaderOptionsPlugin(options);
+    },
+
+    ignorePlugin: webpackOpt => {
+        return new webpack.IgnorePlugin(webpackOpt);
+    },
+
+    // mainly for server still need one chunk
+    limitChunkCountPlugin: webpackOpt => {
+        return new webpack.optimize.LimitChunkCountPlugin(webpackOpt);
+    },
+
+    manifestJsonPlugin: webpackOpt => {
+        return new ManifestJsonPlugin(webpackOpt);
     },
 
     // webpack 4

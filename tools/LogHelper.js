@@ -28,7 +28,8 @@ let colorObj = {
         BgCyan: "\x1b[46m",
         BgWhite: "\x1b[47m"
     },
-    unitArr = [" bytes", " kB", " MB", " GB"];
+    unitArr = [" bytes", " kB", " MB", " GB"],
+    LOG_LVL = {E:"error",I:"info",D:"debug",V: "verbose"};
 
 module.exports = {
     FgRed: function() {
@@ -59,12 +60,42 @@ module.exports = {
         return ret;
     },
     __isDEV: false,
+    __logLvl: LOG_LVL.E,
     setDEV: function(devSetting) {
-        this.__isDEV = devSetting || false;
+        this.__isDEV = devSetting || this.__isDEV;
+    },
+    setLogLevel: function(lvl) {
+        this.__logLvl = lvl || this.__logLvl;
     },
     log: function() {
         if (this.__isDEV) {
             console.log(...arguments);
+        }
+    },
+    info: function () {
+        switch (this.__logLvl) {
+            case LOG_LVL.V:
+                console.log(...arguments);
+                break;
+        }
+    },
+    debug: function(){
+        switch (this.__logLvl) {
+            case LOG_LVL.V:
+            case LOG_LVL.D:
+                console.log(this.FgYellow(...arguments));
+                break;
+        }
+    },
+    error: function() {
+        switch (this.__logLvl) {
+            case LOG_LVL.V:
+            case LOG_LVL.D:
+            case LOG_LVL.E:
+                console.log(this.FgRed(...arguments));
+                break;
+            default:
+                break;
         }
     },
     clear: function() {

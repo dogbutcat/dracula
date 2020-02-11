@@ -51,6 +51,34 @@ let createApp = (serverConfig, webpack) => {
         var bind =
             typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
         debug("Listening on " + bind);
+
+        if (LogHelper.__isDEV) {
+            let openAddr = `http://127.0.0.1:${addr.port}`;
+            try {
+                var open = require("open"),
+                    app;
+
+                switch (process.platform) {
+                    case "wind32":
+                        app = "chrome";
+                        break;
+                    case "linux":
+                        app = "google-chrome";
+                        break;
+                    case "darwin":
+                        app = "google chrome";
+                        break;
+
+                    default:
+                        break;
+                }
+                open(openAddr, { app });
+            } catch (error) {
+                LogHelper.error(
+                    "open browser failed! Please manually open: " + openAddr
+                );
+            }
+        }
     }
     var myConfig = serverConfig;
     var express = require("express");

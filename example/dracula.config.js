@@ -3,12 +3,15 @@
  * {@link https://github.com/webpack/webpack/issues/8656#issuecomment-496822882}
  */
 let _isDev = process.env.NODE_ENV == "development";
+// if development mode is false, other is true
+let _isSSR = !!(process.env.NODE_ENV == "development" ^ true) & false;
 module.exports = {
     server: {
         DEV: _isDev,
         serviceIP: "http://",
         port: 3000, //port
-        ssr: false,
+        ssr: _isSSR,
+        title: "This is Template Title",
         acceptHeaders: [
             "user-agent",
             "origin",
@@ -27,9 +30,9 @@ module.exports = {
         var childProcess = require("child_process");
         const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-        var defaultPlugin = require("./lib/config/webpack/plugins");
-        var defaultLoader = require("./lib/config/webpack/loader");
-        var defaultMix = require("./lib/config/webpack/mix");
+        var defaultPlugin = require("dracula/config/webpack/plugins");
+        var defaultLoader = require("dracula/config/webpack/loader");
+        var defaultMix = require("dracula/config/webpack/mix");
         var extThemePath = path.resolve(__dirname, "./src/theme.less");
 
         let extractDracula = defaultMix.extractcss({
@@ -54,7 +57,7 @@ module.exports = {
 
         var configModuleDebug = {
             rules: [
-                defaultLoader.babel(),
+                defaultLoader.babel({ useBabelrc:true }),
                 defaultLoader.css(),
                 defaultLoader.less(
                     /^(?!.*?(\\|\/)src(\\|\/)).*less$/,
@@ -92,25 +95,43 @@ module.exports = {
 
         var releaseDefine =
             process.env.NODE_ENV != "production"
-                ? defaultPlugin.definePlugin({
-                      "process.env": {
-                          NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-                      }
-                  })
-                : defaultPlugin.definePlugin();
+            ? defaultPlugin.definePlugin({
+                "process.env": {
+                    NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+                    },
+                    __SSR: JSON.stringify(_isSSR)
+            })
+            : defaultPlugin.definePlugin({
+                    __SSR: JSON.stringify(_isSSR)
+            });
+
+        var resolve = {
+            alias: {
+                "@proj": path.resolve(__dirname, 'src'),
+                '@ant-design/icons/lib/dist$': path.resolve(__dirname, './src/icons.js'),
+                'react-dom': '@hot-loader/react-dom'
+            }
+        };
 
         return {
             dev: {
                 useAnalyzer: false,
                 config: {
+                    entry: {
+                        main: [
+                            // for react hot reload
+                            "react-hot-loader/patch"
+                        ]
+                    },
                     devtool: "cheap-module-eval-source-map",
                     output: {
                         path: path.resolve(__dirname, "./public/project"),
                         filename: "spa.dev.js",
                         publicPath: "/project/"
                     },
+                    resolve,
                     module: configModuleDebug,
-                    plugins: [...commonPlugins]
+                    plugins: [...commonPlugins, releaseDefine]
                 }
             },
             release: {
@@ -124,6 +145,7 @@ module.exports = {
                         chunkFilename: "[name].[chunkhash:5].chunk.js",
                         publicPath: "/project/"
                     },
+                    resolve,
                     module: configModule,
                     plugins: [
                         ...commonPlugins,
@@ -137,14 +159,40 @@ module.exports = {
                         }),
                         extractDracula[1],
                         extractStyle[1],
-                        defaultPlugin.cssSplitPlugin({
-                            size: 4000,
-                            imports: false
-                        }),
                         releaseDefine,
                         defaultPlugin.es3ifyPlugin(), // MUST put before uglify or it not work
-                        defaultPlugin.compressPlugin()
-                    ]
+                        defaultPlugin.compressPlugin(),
+                        defaultPlugin.manifestJsonPlugin()
+                    ],
+                    ...defaultPlugin.optimization({
+                        splitChunks: {
+                            cacheGroups: {
+                                vendor: {
+                                    test: /[\\/]node_modules[\\/]/,
+                                    name: 'vendor',
+                                    chunks: 'all',
+                                },
+                                // moment: {
+                                //     test(module, chunks){
+                                //         const path = require('path');
+                                //         return module.resource && (module.resource.includes(`${path.sep}node_modules/moment${path.sep}`)) || false;
+                                //     },
+                                //     name: 'moment',
+                                //     chunks: 'all',
+                                // },
+                                // styles: {
+                                //     name: 'styles',
+                                //     test: /\.css$/,
+                                //     chunks: 'all',
+                                //     enforce: true,
+                                //     // priority: 20, 
+                                // }
+                            }
+                        }
+                    })
+                },
+                serverPack:{
+                    resolve
                 }
             },
             useBundle: false

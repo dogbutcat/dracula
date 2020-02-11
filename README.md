@@ -4,6 +4,16 @@
 
 ## CHANGELOG
 
+> 2020/02
+
+- ADD server side rendering support
+- ADD log helper
+- ADD babel plugin for dynamic import and webpack plugin for manifest, thanks for @loadable
+
+> 2019/07
+
+- UPDATE example project & some webpack configure
+
 > 2019/05
 
 - ADD MIT license
@@ -98,6 +108,7 @@ let HttpTool = utils.HttpTool
 
 - [server](#server)
   - [DEV](#dev-boolean)
+  - [manifestPath](#manifestpath-string)
   - [ipPass](#ipPass-object)
     - [type](#type-string)
     - [queryKey](#querykey-string)
@@ -122,6 +133,7 @@ let HttpTool = utils.HttpTool
   - [release](#release-object)
     - [useAnalyzer](#useanalyzer-boolean)
     - [config](#config-object)
+    - [serverPack](#serverpack-object)
 
 ## `server`
 
@@ -130,6 +142,10 @@ let HttpTool = utils.HttpTool
 ### `DEV` (__Boolean__)
 
   `DEV` property is set server whether running under DEV mode, `true` means dev mode, default: true
+
+### `manifestPath` (__String__)
+
+  `manifestPath` means the file path which bundled resources for web, main for filter out which dynamic import chunks will be loaded and told browser which chunks should be waiting before load content.
 
 ### `ipPass` (__Object__)
 
@@ -197,7 +213,9 @@ let HttpTool = utils.HttpTool
 
 ### `serverRoutes` (__Function__)
 
-- @prams: app
+- @params: req
+- @params: res
+- @params: next
 - @returns: void
 
 `serverRoutes` is the function for custom express routes injection.
@@ -225,6 +243,10 @@ let HttpTool = utils.HttpTool
 ### `release` (__Object__)
 
   release mode webpack options
+
+#### `serverPack` (__Object__)
+
+  additional webpack config for server side pack up like resolve or other.
 
 ## TODO
 

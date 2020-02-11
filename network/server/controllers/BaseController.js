@@ -32,7 +32,7 @@ class BaseController{
 	}
 	/**
 	 * setHost according to route map
-	 * @param {* express request func} req 
+	 * @param {Request} req 
 	 */
 	checkAddrMap(req) {
 		let originalUrl = req.headers.referer || "",ip_keys = req.header("ip_keys")||'', result = null;
@@ -40,20 +40,37 @@ class BaseController{
 		result && this.setHost(result);
 	}
 	/**
+	 * get client ip
+	 * @param {Request} req - request
+	 */
+	getClientIp(req) {
+		let reqHeaders = req.headers;
+		return reqHeaders['x-forwarded-for'] ||
+		reqHeaders["x-real-ip"] ||
+		reqHeaders["proxy-client-ip"] ||
+		reqHeaders["wl-proxy-client-ip"] ||
+        req.connection.remoteAddress ||
+        req.socket.remoteAddress ||
+        req.connection.socket.remoteAddress;
+	}
+	/**
 	 * construct headers to transfer
-	 * @param {* express app func request} req 
+	 * @param {Request} req 
 	 */
 	StructHeader(req) {
-		let heads = {}, reqHeaders = req.headers, { acceptHeaders } = this.Setting;
-		heads['Accept'] = 'application/json';
-		// heads['Content-Type'] = 'application/json;charset=UTF-8';
-		// heads['accessToken'] = '%7B%22userId%22%3A%22ee2d901a8e4f494da5390092f76b1asd%22%2C%22accountId%22%3A%223acaaf2ce86e43e49fbcfbf43376czxc%22%2C%22accountType%22%3A2%2C%22userName%22%3A%22ywbaoji%22%2C%22secret%22%3A%22671a08a9029f6b81037f1830a5a29cb0%22%2C%22index%22%3A0%2C%22ahead%22%3A1504846789126%7D';//todo 记得删除掉
-		// req.headers.cookie = '';
-		for (var v of acceptHeaders) {
-			(reqHeaders[v.toLowerCase()]) &&
-				(heads[v] = reqHeaders[v.toLowerCase()]);
-		}
-		return heads;
+		let heads = {},
+            reqHeaders = req.headers,
+            { acceptHeaders } = this.Setting;
+		heads["Accept"] = "application/json";
+		heads['x-real-ip'] = this.getClientIp(req);
+        // heads['Content-Type'] = 'application/json;charset=UTF-8';
+        // heads['accessToken'] = '%7B%22userId%22%3A%22ee2d901a8e4f494da5390092f76b1asd%22%2C%22accountId%22%3A%223acaaf2ce86e43e49fbcfbf43376czxc%22%2C%22accountType%22%3A2%2C%22userName%22%3A%22ywbaoji%22%2C%22secret%22%3A%22671a08a9029f6b81037f1830a5a29cb0%22%2C%22index%22%3A0%2C%22ahead%22%3A1504846789126%7D';//todo 记得删除掉
+        // req.headers.cookie = '';
+        for (var v of acceptHeaders) {
+            reqHeaders[v.toLowerCase()] &&
+                (heads[v] = reqHeaders[v.toLowerCase()]);
+        }
+        return heads;
 	}
 	/**
 	 * Combine path and host

@@ -1,24 +1,31 @@
 import { DynamicWrapper } from "./utils/dynamic";
+import DefaultLayout from "./layouts/DefaultLayout";
 
 const RouteArr = [
     {
         path: "/",
         exact: true,
+        title: "Index",
         component: DynamicWrapper(
             /**
              * {@link https://webpack.js.org/api/module-methods/#requireresolveweak}
              */
-            require.resolveWeak("./main/index/Index.js"),
-            () => import("./main/index/Index.js")
+            "./main/pages/index/ui/Index.js",
+            () => import(/* webpackChunkName: "index" */ "./main/pages/index/ui/Index.js")
         ),
-        title: "Index"
+        extra: {
+            layout: DefaultLayout,
+            conditional: false
+        }
     },
     {
         path: "*",
-        component: DynamicWrapper(require.resolveWeak("./main/None.js"), () =>
-            import("./main/None.js")
+        component: DynamicWrapper("./main/None.js", () =>
+            import(/* webpackChunkName: "none" */ "./main/None.js")
         ),
-        title: "404"
+        title: "404",
+        extra: {
+        }
     }
 ];
 

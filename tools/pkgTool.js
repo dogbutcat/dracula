@@ -1,10 +1,48 @@
+const path = require("path"),
+    { getProjectDir } = require("../api/ApiTool");
+
 function isNpmPkg(pkgName, options) {
-    let ret = false;
-    // if (/^\./.test(pkgName)) {
-    //     ret = false;
-    // }
-    if (fetchRemotePkg(pkgName)) {
-        ret = true;
+    let ret = false,
+        pkgInJson = false,
+        searchPkg = pkgName, // used to search
+        fullPkg; // used to return for install
+    if (/^\./.test(searchPkg)) {
+        // module name like './a.js' is not a npm package
+        ret = false;
+        return;
+    }
+    const pkgJson = require(path.resolve(getProjectDir(), "./package.json"));
+
+    if ("devDependencies" in pkgJson) {
+        let filteredPkgs = Object.keys(pkgJson.devDependencies).filter(
+            pkg => searchPkg.indexOf(pkg) == 0
+        );
+        if (filteredPkgs.length > 0) {
+            // found missing package in filtered package
+            // use first one
+            let pkgVersion = pkgJson.devDependencies[filteredPkgs[0]].replace(
+                /[\^\~]/,
+                ""
+            );
+            searchPkg = filteredPkgs[0];
+            fullPkg = filteredPkgs[0] + "@" + pkgVersion;
+            pkgInJson = true;
+        }
+    }
+
+    if (!pkgInJson) {
+        // not found package in package.json
+        let splitedPkgNames = searchPkg.split("/");
+        searchPkg = splitedPkgNames[0];
+        if (searchPkg.indexOf("@") === 0) {
+            // start with `@`, permit one more `/`
+            searchPkg += "/" + splitedPkgNames[1];
+        }
+        fullPkg = searchPkg;
+    }
+
+    if (fetchRemotePkg(searchPkg)) {
+        ret = fullPkg;
     }
     return ret;
 }

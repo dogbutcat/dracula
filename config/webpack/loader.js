@@ -1,4 +1,5 @@
 const os = require("os");
+let LogHelper = require("../../tools/LogHelper");
 let babelrc = {
         presets: ["@babel/preset-react", "@babel/preset-env"],
         plugins: [
@@ -30,29 +31,35 @@ let babelrc = {
     },
     cssLoader = createCssLoader();
 
-function createCssLoader() {
+function createCssLoader(cssLoaderOption) {
     // 'css-loader?modules&localIdentName=[path][name]---[local]---[hash:base64:5]'
+    let options = cssLoaderOption || {
+        modules: true,
+        localIdentName: "[name]-[local]-[hash:base64:5]"
+    };
     return {
         loader: "css-loader",
-        options: {
-            modules: true,
-            localIdentName: "[path][name]---[local]---[hash:base64:5]"
-        }
+        options
     };
 }
 
 function createLessLoader(a, extract = false, postcssOpt) {
+
     let json = {},
         baseLoader = cssLoader,
         postcssOption = postcssOpt || {
             ident: "postcss", // webpack requires an identifier (ident) in options when {Function}/require is used (Complex Options). T
             plugins: [
-                require("autoprefixer")({
-                    browsers: ["ie>=8", ">1% in CN"]
-                })
+                require("autoprefixer")
             ]
         },
+        postCssLoader = [{ loader: "postcss-loader", options: postcssOption }],
         initLoaders = extract ? [] : ["style-loader"];
+
+    // ADD 2019/9/26: postcss not work with antd-mobile, add option can drop it.
+    if(postcssOpt === false){
+        postCssLoader = [];
+    }
     if (a) {
         // if external theme file variable exist
         try {
@@ -72,12 +79,14 @@ function createLessLoader(a, extract = false, postcssOpt) {
                 }
             }
             baseLoader = "css-loader";
-        } catch (error) {}
+        } catch (error) {
+            LogHelper.error("read theme variable file error!");
+            LogHelper.error(error);
+        }
     }
 
-    return initLoaders.concat([
-        baseLoader,
-        { loader: "postcss-loader", options: postcssOption },
+    return initLoaders.concat(baseLoader,
+        postCssLoader,
         {
             loader: "less-loader",
             options: {
@@ -85,8 +94,7 @@ function createLessLoader(a, extract = false, postcssOpt) {
                 modifyVars: json,
                 javascriptEnabled: true
             }
-        }
-    ]);
+        });
 }
 
 module.exports = {
@@ -110,13 +118,27 @@ module.exports = {
                 let fs = require("fs"),
                     path = require("path"),
                     ApiTool = require("../../api/ApiTool"),
-                    file = fs
+                    rcFilepath = path.resolve(ApiTool.getProjectDir(), "./.babelrc"),
+                    jsFilepath = path.resolve(ApiTool.getProjectDir(), "./babel.config.js"),
+                    config;
+                
+                    if(fs.existsSync(rcFilepath)){
+                        config = JSON.parse(fs
                         .readFileSync(
-                            path.resolve(ApiTool.getProjectDir(), "./.babelrc")
+                            rcFilepath
                         )
-                        .toString();
-                val = JSON.parse(file);
-            } catch (error) {}
+                        .toString());
+                    }
+
+                    if(fs.existsSync(jsFilepath)){
+                        config = require(jsFilepath);
+                    }
+
+                val = config;
+            } catch (error) {
+                LogHelper.error("parse .babelrc failed!");
+                LogHelper.error(error);
+            }
         }
         return {
             test: /\.js$/,
@@ -127,31 +149,23 @@ module.exports = {
             }
         };
     },
-    css: () => {
+    css: (cssLoaderOption) => {
         return {
             test: /\.css$/,
-            // loader: 'style-loader!' + cssLoader
-            use: ["style-loader", cssLoader]
+            use: ["style-loader", createCssLoader(cssLoaderOption)]
         };
     },
     /**
      * path need to be absolute path
+     * less loader can disable postcss
      */
-    less: (regex, path) => {
+    less: (regex, path, postCssOption) => {
         return {
             test: regex || /\.less$/,
             // loader: getlessStr(path)
-            use: createLessLoader(path)
+            use: createLessLoader(path, null, postCssOption)
         };
     },
-    // extractcss: (a,b) => {
-    // 	let re = RegExp(a + '(\\|\/).*less$'),
-    // 		ExtractTextPlugin = require('extract-text-webpack-plugin');
-    // 	return {
-    // 		test: re,
-    // 		loader: ExtractTextPlugin.extract(`${cssLoader}!less-loader`)
-    // 	}
-    // },
     /**
      * size: limit size, default 5120
      * emit: emit file, default true

@@ -1,9 +1,14 @@
 let createRoute = (setting) => {
+    let getProjectDir, path;
+    if(setting.ssr){
+        path = require('path');
+        getProjectDir = require("../../../api/ApiTool").getProjectDir;
+    }
     var express = require('express'),
         router = express.Router(),
         ApiRoute = require('./ApiRoute'),
         IndexRoute = require(setting.ssr ? 
-            '../../../../build/server.js' :
+            path.resolve(getProjectDir(),'./build/server.js'):
             './IndexRoute');
     router.use('/api', new ApiRoute(setting).getRoute());
     // mountRoute(router, setting);

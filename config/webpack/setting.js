@@ -11,7 +11,9 @@ fs.readdirSync(path.resolve(getProjectDir(), "node_modules"))
         return [".bin"].indexOf(x) === -1;
     })
     .forEach(function(mod) {
-        nodeModules[mod] = "commonjs " + mod;
+        // nodeModules[mod] = "commonjs " + mod;
+        // {@link https://webpack.js.org/configuration/externals/#object}
+        nodeModules[mod] = mod;
     });
 
 let extFile =
@@ -19,7 +21,7 @@ let extFile =
     path.resolve(getProjectDir(), "src/theme.less");
 
 let extractDracula = defaultMix.extractcss({
-    reg: /!(src)(\\|\/).*less$/,
+    reg: /^(?!.*?(\\|\/)src(\\|\/)).*less$/,
     styleOption: {
         less: {
             extFile: extFile
@@ -27,11 +29,11 @@ let extractDracula = defaultMix.extractcss({
     },
     extractOption: {
         filename: "dracula.css",
-        chunkFilename: "dracula-[id].css"
+        chunkFilename: "dracula-[name].css"
     }
 });
 let extractStyle = defaultMix.extractcss({
-    reg: /src(\\|\/).*less$/,
+    reg: /(.*?(\\|\/)src(\\|\/)).*less$/,
     extractOption: {
         filename: "style.css",
         chunkFilename: "style-[id].css"
@@ -129,23 +131,32 @@ module.exports = {
         output: {
             path: path.resolve(getProjectDir(), "build"),
             filename: "server.js",
-            publicPath: "project/",
-            libraryTarget: "commonjs2"
+            publicPath: "/project/",
+            libraryTarget: "commonjs2" // https://github.com/webpack/webpack/issues/1114#issuecomment-105509929
         },
         target: "node",
-        externals: nodeModules,
+        // externals: nodeModules,
         devtool: 'cheap-module-source-map',
         module: {
             rules: [
                 defaultLoader.babel({
                     presets: ["@babel/preset-react", "@babel/preset-env"],
                     plugins: [
-                        "@babel/plugin-proposal-class-properties" // for static property transform
+                        "@babel/plugin-proposal-class-properties", // for static property transform
+                        "@babel/plugin-syntax-dynamic-import",
+                        "@babel/plugin-syntax-import-meta",
+                        "@babel/plugin-proposal-json-strings",
                     ]
                 }),
                 defaultLoader.css(),
                 extractStyle[0],
                 extractDracula[0],
+                // server pack need to extract css out or will cause `window` undefined error
+                // defaultLoader.less(
+                //     /^(?!.*?(\\|\/)src(\\|\/)).*less$/,
+                //     extFile
+                // ),
+                // defaultLoader.less(/(.*?(\\|\/)src(\\|\/)).*less$/),
                 defaultLoader.images(5120, false)
             ]
         },
@@ -156,7 +167,11 @@ module.exports = {
             }),
             extractDracula[1],
             extractStyle[1],
-            defaultPlugin.loaderOptionsPlugin()
+            defaultPlugin.loaderOptionsPlugin(),
+            // for server still need one chunk
+            defaultPlugin.limitChunkCountPlugin({
+                maxChunks: 1
+            })
         ]
     }
 };

@@ -9,7 +9,20 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1" />
     <link rel="shortcut icon" href="images/yt8logo.png">
 
-    <title>{{{_title}}}</title>
+    {{#if _title}}
+        <title>{{{_title}}}</title>
+    {{else}}
+        <title>This is Default Title</title>
+    {{/if}}
+    {{#if _metadata}}
+        <meta name="keywords"
+            content={{{_metadata.keywords}}} />
+        <meta name="description"
+            content={{{_metadata.description}}}/>
+    {{else}}
+        <meta name="keywords" content="This is default keywords"/>
+        <meta name="description" content="This is default description"/>
+    {{/if}}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
         * {
@@ -21,7 +34,7 @@
         body tbody {
             background-color: transparent !important;
         }
-
+{{!-- 
         .full {
             position: absolute;
             width: 100%;
@@ -30,7 +43,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-        }
+        } --}}
 
         .loading_container {
             left: 50%;
@@ -118,11 +131,12 @@
     </script>
 {{#if isDEV}}
 {{else}}
-    <% for (var css in htmlWebpackPlugin.files.css) { if(~htmlWebpackPlugin.files.css[css].indexOf('apin')) {%>
+    <% for (var css in htmlWebpackPlugin.files.css) { if(~htmlWebpackPlugin.files.css[css].indexOf('dracula')) {%>
     <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
     <% }} for (var css in htmlWebpackPlugin.files.css) { if(~htmlWebpackPlugin.files.css[css].indexOf('src')) {%>
     <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
     <% }} %>
+    {{{_styles}}}
 {{/if}}
 
 </head>
@@ -154,6 +168,7 @@
 {{#if isDEV}}
     <script type="text/javascript" src="/project/spa.dev.js"></script>
 {{else}}
+    {{{_scripts}}}
     <% for (var js in htmlWebpackPlugin.files.js) { %>
     <script type="text/javascript" src="<%= htmlWebpackPlugin.files.js[js] %>"></script>
     <% } %>

@@ -67,7 +67,9 @@ class WebpackConfig {
 				this.outConfig.plugins.push(defaultPlugin.definePlugin(localConfig[mode]['defineDracula']));
 			}
 		}
-		return opts.packServer ? [this.outConfig, localWebpackConfig.serverPack] : this.outConfig;
+		return opts.packServer 
+				? [this.outConfig, _.mergeWith(localWebpackConfig.serverPack,externConfig.serverPack, this.mergeCustomizer)] 
+				: this.outConfig;
 	}
 
 	getWebpackPath() {
